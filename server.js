@@ -6,9 +6,30 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 // app.use(cors());
-app.use(cors({
-  origin: "https://dynamic-website-react.onrender.com"
-}));
+// app.use(cors({
+//   origin: "https://dynamic-website-react.onrender.com"
+// }));
+
+const allowedOrigins = [
+  "https://dynamic-website-react.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:4173",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
+
 app.use(express.json());
 
 
