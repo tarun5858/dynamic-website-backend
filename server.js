@@ -11,6 +11,7 @@ const app = express();
 
 // CORS configuration
 const allowedOrigins = [
+  "https://demo.prehome.in",
   "https://dynamic-website-react.onrender.com",
   "http://localhost:5173",
   "http://localhost:4173",
