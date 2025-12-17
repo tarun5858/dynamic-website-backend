@@ -3,6 +3,8 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import blogRoutes from "./routes/blogRoutes.js"; // <--- import routing
+import './cron-ping.js';
+
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
