@@ -41,6 +41,9 @@ const blogSchema = new mongoose.Schema({
   subtitle2: String,
   subttileHead2: [subttileSectionSchema],
 
+  // ADD THIS FIELD TO ENABLE THE TABLE AFTER SUBTITLE 2 / SUBHEADINGMAIN 3
+  hasTableAfterSubtitle2: { type: Boolean, default: false },
+
   subtitle3: String,
   subttileHead3: [subttileSectionSchema],
 
@@ -70,6 +73,23 @@ const blogSchema = new mongoose.Schema({
 
   imagePositions: [imagePositionSchema],
 });
+
+// Example in your controller file:
+export const getBlogById = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+
+    // TEMPORARY MANUAL OVERRIDE (Optional for quick testing):
+    // You can hardcode it here for testing a specific blog ID:
+    if (blog._id.toString() === "6aae863aacd0d0db15ef7012") {
+      blog.hasTableAfterSubtitle2 = true; 
+    }
+
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // const Blog = mongoose.model("Blog", blogSchema, "dynamic_blogs");
 const Blog = blogDB.model("Blog", blogSchema, "dynamic_blogs");
